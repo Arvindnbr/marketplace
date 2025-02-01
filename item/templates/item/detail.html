@@ -1,0 +1,44 @@
+{%extends 'engine/base.html' %}
+
+{%block title %} {{ item.name }} {% endblock %}
+{% block content  %}
+    <div class="grid grid-cols-6 gap-6">
+        <div class="col-span-4">
+            <img src=" {{ item.image.url }}" class="rounded-xl w-full h-auto max-w-[1300px] mx-auto">
+        </div>
+
+        <div class="col-span-2 p-6 bg-gray-100 rounded-xl ">
+            <h1 class="mb-4 text-3xl">{{ item.name }}</h1>
+            <p class="px-1 py-1 text-red-600"><strong>Price: </strong>{{item.price}}</p>
+            <p class="px-1 text-red-600"><strong>Seller: </strong>{{item.created_by}}</p>
+            {% if item.description %}
+                <p class="py-1 px-1 text-red-700 bg-white rounded-xl">
+                    <strong class="text-red-600">Description: </strong><br>
+                    {{item.description}}
+                </p>
+            {% endif %}
+
+            <a href='#' class="inline-block mt-8 mb-6 px-6 py-3 text-lg font-semibold bg-red-600 text-white rounded-xl border-2 hover:bg-white hover:text-red-600 hover:border-red-600">Contact seller</a>
+        </div>
+
+    </div>
+
+    <div class="mt-6 px-6 py-6 bg-gray-100 rounded-xl">
+        <h2 class="mb-12 text-2xl text-center"> Related Items</h2>
+        <div class="grid grid-cols-4 gap-3">
+            {% for item in related %}
+                <div class="p-b-6">
+                    <a href="{% url  'item:detail' item.id %}" class="group block">
+                        <div class="h-48 overflow-hidden">
+                            <img src="{{ item.image.url }}" class="w-full h-full object-cover rounded-t-xl">
+                        </div>
+                        <div class="p-6 bg-red-600 rounded-b-xl transition-all duration-200 ease-in-out text-white hover:bg-white hover:text-red-600 transform hover:scale-105 min-h-[100px] flex flex-col justify-between">
+                            <h2 class="text-2xl -hover:text-semibold transform hover:scale-105">{{ item.name}}</h2>
+                            <p class="text-xl transform hover:scale-105"> Price: {{item.price}}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
